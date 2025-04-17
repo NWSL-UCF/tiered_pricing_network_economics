@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load dataset
-df = pd.read_csv("netflow_grouped_by_src_dst.csv")
+df = pd.read_csv("../netflow_grouped_by_src_dst.csv")
 
 # Filter out invalid distances
 df = df[df['distance'] > 0]
@@ -10,7 +10,7 @@ df = df[df['distance'] > 0]
 # Assign tier based on distance
 df['tier'] = pd.cut(
     df['distance'],
-    bins=[0, 100, 1000, float('inf')],
+    bins=[0, 500, 2000, float('inf')],
     labels=['Metro', 'Regional', 'Intercontinental']
 )
 
@@ -41,4 +41,4 @@ ax1.legend(lines, labels, loc='upper left')
 
 plt.tight_layout()
 plt.grid(True, which='both', axis='y', linestyle='--', alpha=0.6)
-plt.savefig("n.png")
+plt.savefig("../figure/flowcount_flowdemand_comparision_by_tiers_new.png")
