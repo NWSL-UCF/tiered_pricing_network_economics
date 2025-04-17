@@ -41,7 +41,7 @@ width = 0.25
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.bar(x - width, avg_costs, width, label='Average Cost', color='gray')
 ax.bar(x, tiered_prices, width, label='Tiered Price', color='steelblue')
-ax.bar(x + width, flat_prices, width, label='Flat Price ($5)', color='orange')
+ax.bar(x + width, flat_prices, width, label='Flat Price ($10)', color='orange')
 
 ax.set_xticks(x)
 ax.set_xticklabels(tiers)
