@@ -14,8 +14,8 @@ print("=== Simulated Flows ===")
 # print(df)
 
 # Step 2: Define cost and valuation
-gamma, beta = 0.01, 5
-alpha, s0, P0 = 2.0, 0.2, 20.0
+gamma, beta = 0.005, 2
+alpha, s0, P0 = 2.0, 0.2, 5.0
 df['cost'] = gamma * df['distance'] + beta
 df['v'] = P0 * (df['demand'] ** (1 / alpha))
 print("\n=== Cost and Valuation ===")
@@ -26,10 +26,15 @@ df['ced_profit'] = (df['v']**alpha / alpha) * (
     (alpha * df['cost'] / (alpha - 1) - df['cost']) /
     (alpha * df['cost'] / (alpha - 1))**alpha
 )
-df = df.sort_values('ced_profit', ascending=False).reset_index(drop=True)
-df['tier'] = pd.qcut(df.index, 3, labels=[0, 1, 2])
+
+# df = df.sort_values('ced_profit', ascending=False).reset_index(drop=True)
+# df['tier'] = pd.qcut(df.index, 3, labels=[0, 1, 2])
+df['tier'] = pd.cut(df['distance'], 
+                    bins=[0, 100, 1000, float('inf')], 
+                    labels=[0, 1, 2])
+
 print("\n=== Tier Assignment ===")
-print(df[['flow', 'ced_profit', 'tier']])
+print(df[['flow', 'distance', 'tier']])
 
 # Step 4: Compute bundle price (stable)
 tier_params = {}
@@ -50,6 +55,7 @@ df['p_single'] = float(P0)
 def compute_profits(pA, pB):
     pa = pA.to_numpy(dtype=float)
     pb = pB.to_numpy(dtype=float)
+    print(pa, pb)
     shareA = 1.0 / (1.0 + np.exp(alpha * (pa - pb)))
     demands = df['demand'].to_numpy(dtype=float)
     costs = df['cost'].to_numpy(dtype=float)
