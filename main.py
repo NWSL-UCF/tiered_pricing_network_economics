@@ -14,13 +14,16 @@ print("=== Simulated Flows ===")
 # print(df)
 
 # Step 2: Define cost and valuation
-gamma, beta = 0.005, 2
-alpha, s0, P0 = 2.0, 0.2, 10.0
+gamma, beta = 0.01, 2
+alpha, s0, P0 = 2.0, 0.2, 5.0
 df['cost'] = gamma * df['distance'] + beta
 df['v'] = P0 * (df['demand'] ** (1 / alpha))
 print("\n=== Cost and Valuation ===")
 print(df[['distance', 'demand', 'cost', 'v']])
 
+total_flat_valuation = df['v'].sum()
+print(f"\n=== Aggregated Valuation for Flat Price (P0 = ${P0}) ===")
+print(f"Total Valuation: {total_flat_valuation:.2f}")
 # Step 3: Estimate CED profit and bundle into 3 tiers
 df['ced_profit'] = (df['v']**alpha / alpha) * (
     (alpha * df['cost'] / (alpha - 1) - df['cost']) /
@@ -32,7 +35,7 @@ df['ced_profit'] = (df['v']**alpha / alpha) * (
 df['tier'] = pd.cut(df['distance'], 
                     bins=[0, 500, 2000, float('inf')], 
                     labels=[0, 1, 2])
-
+print(df.groupby('tier')['v'].sum())
 print("\n=== Tier Assignment ===")
 print(df[['flow', 'distance', 'tier']])
 
