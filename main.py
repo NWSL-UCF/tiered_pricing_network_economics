@@ -60,6 +60,7 @@ def compute_profits(pA, pB):
     pb = pB.to_numpy(dtype=float)
     # print(pa, pb)
     shareA = 1.0 / (1.0 + np.exp(alpha * (pa - pb)))
+    print(shareA)
     demands = df['demand'].to_numpy(dtype=float)
     costs = df['cost'].to_numpy(dtype=float)
     profitA = np.sum(demands * shareA * (pa - costs))
