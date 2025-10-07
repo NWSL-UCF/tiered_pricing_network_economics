@@ -1,0 +1,65 @@
+{
+    "1_tier": {
+        "strategy_name": "Flat",
+        "tiers": [
+            {"tier_id": 0, "name": "Universal", "perc_min": 0.0, "perc_max": 1.0}
+        ]
+    },
+    "2_tier": {
+        "strategy_name": "2-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Local", "perc_min": 0.0, "perc_max": 0.5},
+            {"tier_id": 1, "name": "Long-Haul", "perc_min": 0.5, "perc_max": 1.0}
+        ]
+    },
+    "3_tier": {
+        "strategy_name": "3-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Metro", "perc_min": 0.0, "perc_max": 0.3333},
+            {"tier_id": 1, "name": "Regional", "perc_min": 0.3333, "perc_max": 0.6667},
+            {"tier_id": 2, "name": "Intercontinental", "perc_min": 0.6667, "perc_max": 1.0}
+        ]
+    },
+    "4_tier": {
+        "strategy_name": "4-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Metro", "perc_min": 0.0, "perc_max": 0.25},
+            {"tier_id": 1, "name": "Regional", "perc_min": 0.25, "perc_max": 0.5},
+            {"tier_id": 2, "name": "National", "perc_min": 0.5, "perc_max": 0.75},
+            {"tier_id": 3, "name": "Intercontinental", "perc_min": 0.75, "perc_max": 1.0}
+        ]
+    },
+    "5_tier": {
+        "strategy_name": "5-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Local", "perc_min": 0.0, "perc_max": 0.2},
+            {"tier_id": 1, "name": "Metro", "perc_min": 0.2, "perc_max": 0.4},
+            {"tier_id": 2, "name": "Regional", "perc_min": 0.4, "perc_max": 0.6},
+            {"tier_id": 3, "name": "National", "perc_min": 0.6, "perc_max": 0.8},
+            {"tier_id": 4, "name": "Intercontinental", "perc_min": 0.8, "perc_max": 1.0}
+        ]
+    },
+    "6_tier": {
+        "strategy_name": "6-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Local", "perc_min": 0.0, "perc_max": 0.1667},
+            {"tier_id": 1, "name": "Metro", "perc_min": 0.1667, "perc_max": 0.3333},
+            {"tier_id": 2, "name": "Regional", "perc_min": 0.3333, "perc_max": 0.5},
+            {"tier_id": 3, "name": "National", "perc_min": 0.5, "perc_max": 0.6667},
+            {"tier_id": 4, "name": "Continental", "perc_min": 0.6667, "perc_max": 0.8333},
+            {"tier_id": 5, "name": "Intercontinental", "perc_min": 0.8333, "perc_max": 1.0}
+        ]
+    },
+    "7_tier": {
+        "strategy_name": "7-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Hyperlocal", "perc_min": 0.0, "perc_max": 0.1429},
+            {"tier_id": 1, "name": "Local", "perc_min": 0.1429, "perc_max": 0.2857},
+            {"tier_id": 2, "name": "Metro", "perc_min": 0.2857, "perc_max": 0.4286},
+            {"tier_id": 3, "name": "Regional", "perc_min": 0.4286, "perc_max": 0.5714},
+            {"tier_id": 4, "name": "National", "perc_min": 0.5714, "perc_max": 0.7143},
+            {"tier_id": 5, "name": "Continental", "perc_min": 0.7143, "perc_max": 0.8571},
+            {"tier_id": 6, "name": "Intercontinental", "perc_min": 0.8571, "perc_max": 1.0}
+        ]
+    }
+}

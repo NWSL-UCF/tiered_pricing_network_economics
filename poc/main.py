@@ -1,17 +1,11 @@
 import numpy as np
 import pandas as pd
 
-# Step 1: Simulate flows
-# np.random.seed(42)
-# n = 10
-# dist = np.random.randint(5, 3000, size=n)
-# demand = np.random.randint(50, 1000, size=n)
 df = pd.read_csv("netflow_grouped_by_src_dst.csv")
 df = df[df['distance'] > 0]
 df['flow'] = range(len(df))
 
 print("=== Simulated Flows ===")
-# print(df)
 
 # Step 2: Define cost and valuation
 gamma, beta = 0.01, 2
