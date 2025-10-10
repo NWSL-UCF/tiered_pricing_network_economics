@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-Wrapper script to run sim.py for all parameter combinations from params.json
-"""
-
 import json
 import itertools
 import subprocess
