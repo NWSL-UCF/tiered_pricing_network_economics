@@ -1,3 +1,9 @@
+"""
+Parameter sweep runner for Transit ISP Pricing Competition Analysis.
+
+This script runs the analysis across multiple parameter combinations.
+"""
+
 import json
 import itertools
 import subprocess
@@ -71,22 +77,23 @@ def generate_combinations(params: dict) -> list:
 
 
 def create_run_id(combo: dict, index: int) -> str:
-    """
-    Create a unique run ID for the parameter combination.
-    
-    Args:
-        combo: Parameter combination dictionary
-        index: Combination index
-        
-    Returns:
-        Unique run ID string
-    """
-    # Create a short identifier based on key parameters
-    p0 = combo['P0']
-    s0 = combo['s0']
-    alpha = combo['alpha']
-    
-    return f"run_{index:04d}_P0_{p0}_s0_{s0}_alpha_{alpha}"
+	"""
+	Create a unique run ID for the parameter combination.
+	
+	Args:
+		combo: Parameter combination dictionary
+		index: Combination index
+		
+	Returns:
+		Unique run ID string
+	"""
+	# Create a short identifier based on key parameters
+	gamma = combo['gamma']
+	s0 = combo['s0']
+	alpha = combo['alpha']
+    beta = combo['beta']
+	
+	return f"run_{index:04d}_gamma_{gamma}_s0_{s0}_alpha_{alpha}_beta_{beta}"
 
 
 def run_simulation(combo: dict, index: int, base_output_dir: str, 
@@ -113,24 +120,23 @@ def run_simulation(combo: dict, index: int, base_output_dir: str,
     output_dir = Path(base_output_dir) / run_id
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # Build command
-    cmd = [
-        'python', sim_script,
-        '--base-path', str(output_dir),
-        '--P0', str(combo['P0']),
-        '--gamma', str(combo['gamma']),
-        '--beta', str(combo['beta']),
-        '--alpha', str(combo['alpha']),
-        '--s0', str(combo['s0']),
-        '--data', data_file,
-        '--config', config_file,
-        '--run-id', run_id,
-        '--log-level', 'INFO'
-    ]
-    
-    logger.info(f"Running simulation {index + 1}: {run_id}")
-    logger.info(f"Parameters: P0={combo['P0']}, γ={combo['gamma']}, β={combo['beta']}, α={combo['alpha']}, s0={combo['s0']}")
-    logger.info(f"Output directory: {output_dir}")
+	# Build command - using the new modular structure
+	cmd = [
+		'python', '-m', 'src.main',
+		'--base-path', str(output_dir),
+		'--gamma', str(combo['gamma']),
+		'--beta', str(combo['beta']),
+		'--alpha', str(combo['alpha']),
+		'--s0', str(combo['s0']),
+		'--data', data_file,
+		'--config', config_file,
+		'--run-id', run_id,
+		'--log-level', 'INFO'
+	]
+	
+	logger.info(f"Running simulation {index + 1}: {run_id}")
+	logger.info(f"Parameters: γ={combo['gamma']}, β={combo['beta']}, α={combo['alpha']}, s0={combo['s0']} (P0 calculated endogenously)")
+	logger.info(f"Output directory: {output_dir}")
     
     try:
         # Run the simulation

@@ -57,16 +57,27 @@ class TransitISPCompetitionModel:
 		self.logger.debug(f"Calculated costs with γ={gamma}, β={beta}")
 	
 	
-	def calculate_valuations(self, P0: float, alpha: float) -> None:
+	def calculate_valuations(self, alpha: float, s0: float) -> None:
 		"""
 		Calculate customer valuations for each flow.
 		
+		Valuations are based on an endogenous flat pricing equilibrium:
+		P0 = average_cost + markup
+		
 		Args:
-			P0: Baseline flat price ($/TB)
 			alpha: Price elasticity parameter
+			s0: Competition intensity parameter
 		"""
+		# Calculate P0 endogenously from average cost structure
+		avg_cost = self.df['cost_per_tb'].mean()
+		markup = 1 / (alpha * s0)
+		P0 = avg_cost + markup
+		
 		self.df['v'] = P0 * (self.df['demand_tb'] ** (1 / alpha))
-		self.logger.debug(f"Calculated valuations with P0={P0}, α={alpha}")
+		self.logger.debug(f"Calculated valuations with endogenous P0=${P0:.2f} (avg_cost=${avg_cost:.2f}, markup=${markup:.2f}), α={alpha}")
+		
+		# Store P0 for reference
+		self.P0 = P0
 	
 	
 	def assign_tiers(self, n_tiers: int) -> pd.DataFrame:
@@ -110,7 +121,7 @@ class TransitISPCompetitionModel:
 		return df_copy
 	
 	
-	def calculate_tier_prices(self, df_tiers: pd.DataFrame, alpha: float, s0: float, P0: float) -> Dict[int, float]:
+	def calculate_tier_prices(self, df_tiers: pd.DataFrame, alpha: float, s0: float) -> Dict[int, float]:
 		"""
 		Calculate optimal price for each tier using bundle pricing formula.
 		
@@ -118,7 +129,6 @@ class TransitISPCompetitionModel:
 			df_tiers: DataFrame with tier assignments
 			alpha: Price elasticity parameter
 			s0: Competition intensity parameter
-			P0: Baseline price for flat pricing
 		
 		Returns:
 			Dictionary mapping tier_id to price
@@ -127,38 +137,34 @@ class TransitISPCompetitionModel:
 		
 		unique_tiers = df_tiers['tier'].unique()
 		
-		if len(unique_tiers) == 1 and unique_tiers[0] == 0:
-			# Flat pricing - single price for all
-			tier_prices[0] = P0
-		else:
-			# Tiered pricing - calculate price per tier
-			for tier_id in unique_tiers:
-				sub = df_tiers[df_tiers['tier'] == tier_id]
-				
-				# Bundle valuation calculation
-				max_v = sub['v'].max()
-				weights = np.exp(alpha * (sub['v'] - max_v))
-				
-				# Weighted average cost
-				c_b = (sub['cost_per_tb'] * weights).sum() / weights.sum()
-				
-				# Price = cost + markup
-				markup = 1 / (alpha * s0)
-				p_b = c_b + markup
-				
-				tier_prices[tier_id] = p_b
+		# Calculate price per tier (including flat pricing as single tier)
+		for tier_id in unique_tiers:
+			sub = df_tiers[df_tiers['tier'] == tier_id]
+			
+			# Bundle valuation calculation
+			max_v = sub['v'].max()
+			weights = np.exp(alpha * (sub['v'] - max_v))
+			
+			# Weighted average cost
+			c_b = (sub['cost_per_tb'] * weights).sum() / weights.sum()
+			
+			# Price = cost + markup
+			markup = 1 / (alpha * s0)
+			p_b = c_b + markup
+			
+			tier_prices[tier_id] = p_b
 		
 		return tier_prices
 	
 	
-	def create_pricing_strategy(self, n_tiers: int, P0: float, gamma: float, 
+	def create_pricing_strategy(self, n_tiers: int, gamma: float, 
 	                            beta: float, alpha: float, s0: float) -> Tuple[pd.DataFrame, np.ndarray]:
 		"""
 		Create complete pricing strategy for given number of tiers.
 		
 		Args:
-			n_tiers: Number of tiers (1-7)
-			P0, gamma, beta, alpha, s0: Model parameters
+			n_tiers: Number of tiers (1-10)
+			gamma, beta, alpha, s0: Model parameters
 		
 		Returns:
 			Tuple of (DataFrame with tier info, price array for each flow)
@@ -167,7 +173,7 @@ class TransitISPCompetitionModel:
 		df_strategy = self.assign_tiers(n_tiers)
 		
 		# Calculate tier prices
-		tier_prices = self.calculate_tier_prices(df_strategy, alpha, s0, P0)
+		tier_prices = self.calculate_tier_prices(df_strategy, alpha, s0)
 		
 		# Map prices to flows and convert to float
 		df_strategy['price'] = df_strategy['tier'].map(tier_prices).astype(float)
@@ -385,13 +391,13 @@ class TransitISPCompetitionModel:
 		}
 	
 	
-	def build_payoff_matrix(self, P0: float, gamma: float, beta: float, 
+	def build_payoff_matrix(self, gamma: float, beta: float, 
 	                       alpha: float, s0: float) -> Tuple[pd.DataFrame, Dict]:
 		"""
-		Build complete 7x7 payoff matrix for all strategy combinations.
+		Build complete payoff matrix for all strategy combinations.
 		
 		Args:
-			P0, gamma, beta, alpha, s0: Model parameters
+			gamma, beta, alpha, s0: Model parameters
 		
 		Returns:
 			Tuple of (payoff matrix DataFrame, strategies dictionary)
@@ -399,17 +405,20 @@ class TransitISPCompetitionModel:
 		self.logger.info("="*80)
 		self.logger.info("BUILDING PAYOFF MATRIX")
 		self.logger.info("="*80)
-		self.logger.info(f"Parameters: P0=${P0}, γ={gamma}, β={beta}, α={alpha}, s0={s0}\n")
 		
 		# Calculate costs and valuations (same for all strategies)
 		self.calculate_costs(gamma, beta)
-		self.calculate_valuations(P0, alpha)
+		self.calculate_valuations(alpha, s0)
 		
-		# Generate all strategies (1-tier through 7-tier)
+		# Log parameters including endogenous P0
+		self.logger.info(f"Parameters: γ={gamma}, β={beta}, α={alpha}, s0={s0}")
+		self.logger.info(f"Endogenous P0=${self.P0:.2f}/TB\n")
+		
+		# Generate all strategies (1-tier through 10-tier)
 		strategy_names = []
 		strategies = {}
 		
-		for n_tiers in range(1, 8):
+		for n_tiers in range(1, 11):
 			if n_tiers == 1:
 				strategy_name = "Flat"
 			else:
@@ -419,7 +428,7 @@ class TransitISPCompetitionModel:
 			
 			# Create pricing strategy
 			df_strategy, prices = self.create_pricing_strategy(
-				n_tiers, P0, gamma, beta, alpha, s0
+				n_tiers, gamma, beta, alpha, s0
 			)
 			strategies[strategy_name] = {
 				'prices': prices,
@@ -665,13 +674,12 @@ class TransitISPCompetitionModel:
 		plt.close()
 	
 	
-	def run_analysis(self, P0: float = 8.0, gamma: float = 0.005, 
+	def run_analysis(self, gamma: float = 0.005, 
 	                beta: float = 0.5, alpha: float = 2.0, s0: float = 0.2) -> Dict:
 		"""
 		Run complete competition analysis.
 		
 		Args:
-			P0: Baseline flat price ($/TB)
 			gamma: Variable cost per mile ($/mile/TB)
 			beta: Fixed cost ($/TB)
 			alpha: Price elasticity parameter
@@ -683,11 +691,11 @@ class TransitISPCompetitionModel:
 		self.logger.info("Starting competition analysis...")
 		
 		# Build payoff matrix
-		payoff_matrix, strategies = self.build_payoff_matrix(P0, gamma, beta, alpha, s0)
+		payoff_matrix, strategies = self.build_payoff_matrix(gamma, beta, alpha, s0)
 		
 		# Display payoff matrix
 		self.logger.info("\n" + "="*80)
-		self.logger.info("COMPLETE PAYOFF MATRIX (7x7)")
+		self.logger.info("COMPLETE PAYOFF MATRIX (10x10)")
 		self.logger.info("="*80)
 		self.logger.info("Format: (ISP A profit, ISP B profit) in dollars")
 		self.logger.info("Rows = ISP A's strategy, Columns = ISP B's strategy\n")
@@ -719,18 +727,18 @@ class TransitISPCompetitionModel:
 		
 		self.logger.info("\nBest Responses for ISP A (given B's strategy):")
 		for strat_B, (best_A, profit_A) in best_responses['ISP_A'].items():
-			self.logger.info(f"  If B plays {strat_B:>7} → A's best: {best_A:>7} (profit: ${profit_A:>12,.2f})")
+			self.logger.info(f"  If B plays {strat_B:>8} → A's best: {best_A:>8} (profit: ${profit_A:>12,.2f})")
 		
 		self.logger.info("\nBest Responses for ISP B (given A's strategy):")
 		for strat_A, (best_B, profit_B) in best_responses['ISP_B'].items():
-			self.logger.info(f"  If A plays {strat_A:>7} → B's best: {best_B:>7} (profit: ${profit_B:>12,.2f})")
+			self.logger.info(f"  If A plays {strat_A:>8} → B's best: {best_B:>8} (profit: ${profit_B:>12,.2f})")
 		
 		# Comprehensive welfare analysis
 		welfare_analysis = self.analyze_comprehensive_welfare(payoff_matrix, strategies, alpha)
 		
-		# Store parameters
+		# Store parameters (including endogenous P0)
 		parameters = {
-			'P0': P0, 'gamma': gamma, 'beta': beta, 
+			'P0': self.P0, 'gamma': gamma, 'beta': beta, 
 			'alpha': alpha, 's0': s0
 		}
 		
@@ -918,8 +926,6 @@ def parse_arguments():
 	)
 	
 	# Model parameters
-	parser.add_argument('--P0', type=float, default=8.0,
-	                   help='Baseline flat price ($/TB)')
 	parser.add_argument('--gamma', type=float, default=0.005,
 	                   help='Variable cost per mile ($/mile/TB)')
 	parser.add_argument('--beta', type=float, default=0.5,
@@ -927,7 +933,7 @@ def parse_arguments():
 	parser.add_argument('--alpha', type=float, default=2.0,
 	                   help='Price elasticity parameter')
 	parser.add_argument('--s0', type=float, default=0.2,
-	                   help='Competition intensity parameter')
+	                   help='Competition intensity parameter (P0 is calculated endogenously)')
 	
 	# File paths
 	parser.add_argument('--data', type=str, default='netflow_grouped_by_src_dst.csv',
@@ -974,11 +980,11 @@ if __name__ == "__main__":
 	logger.info("="*80)
 	logger.info(f"Base path: {base_path}")
 	logger.info(f"Parameters:")
-	logger.info(f"  P0 (baseline price): ${args.P0}/TB")
 	logger.info(f"  γ (distance cost): ${args.gamma}/mile/TB")
 	logger.info(f"  β (fixed cost): ${args.beta}/TB")
 	logger.info(f"  α (price elasticity): {args.alpha}")
 	logger.info(f"  s0 (competition intensity): {args.s0}")
+	logger.info(f"  P0 (baseline price): Calculated endogenously from cost + markup")
 	logger.info(f"  Data file: {args.data}")
 	logger.info(f"  Config file: {args.config}")
 	logger.info(f"  Log level: {args.log_level}")
@@ -993,7 +999,6 @@ if __name__ == "__main__":
 	
 	# Run analysis with command line parameters
 	results = model.run_analysis(
-		P0=args.P0,
 		gamma=args.gamma,
 		beta=args.beta,
 		alpha=args.alpha,
