@@ -10,7 +10,7 @@ from .models.competition import CompetitionModel
 from .analysis.welfare import WelfareAnalyzer
 from .analysis.visualization import PayoffMatrixVisualizer
 from .utils.logger import setup_logger
-from .utils.io_handler import load_json, create_summary_json
+from .utils.io_handler import load_json, create_summary_json, parse_payoff_matrix_csv, calculate_welfare_matrix, calculate_strategy_details, save_json
 
 
 class TransitISPAnalysis:
@@ -82,6 +82,7 @@ class TransitISPAnalysis:
             'nash_equilibria': nash_equilibria,
             'best_responses': best_responses,
             'welfare_analysis': welfare_analysis,
+            'welfare_analyzer': self.welfare_analyzer,
             'parameters': parameters
         }
     
@@ -178,6 +179,36 @@ def main():
             results['welfare_analysis'], results['strategies'], scenario_path
         )
         logger.info(f"✅ Summary saved to {summary_json}")
+        
+        # Generate additional detailed analysis files
+        logger.info("Generating detailed analysis files...")
+        
+        # Parse payoff matrix for welfare calculations
+        strategies_list, payoff_matrix_dict = parse_payoff_matrix_csv(str(payoff_csv))
+        
+        # Calculate welfare matrix
+        welfare_matrix = calculate_welfare_matrix(
+            strategies_list, payoff_matrix_dict, results, results['parameters']['alpha']
+        )
+        
+        # Calculate strategy details
+        strategy_details = calculate_strategy_details(results)
+        
+        # Save welfare matrix
+        welfare_json = scenario_path / "welfare_matrix.json"
+        save_json({
+            'parameters': results['parameters'],
+            'welfare_matrix': welfare_matrix
+        }, str(welfare_json))
+        logger.info(f"✅ Welfare matrix saved to {welfare_json}")
+        
+        # Save strategy details
+        strategy_json = scenario_path / "strategy_details.json"
+        save_json({
+            'parameters': results['parameters'],
+            'strategy_details': strategy_details
+        }, str(strategy_json))
+        logger.info(f"✅ Strategy details saved to {strategy_json}")
     
     logger.info("\n" + "="*80)
     logger.info("ALL SCENARIOS COMPLETE")
