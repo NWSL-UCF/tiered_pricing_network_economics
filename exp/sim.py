@@ -3,6 +3,8 @@ import pandas as pd
 import json
 from typing import Dict, Tuple, List
 import itertools
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 import seaborn as sns
 import argparse

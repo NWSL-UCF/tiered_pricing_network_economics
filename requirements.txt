@@ -1,0 +1,16 @@
+# Core scientific computing
+numpy>=1.21.0
+pandas>=1.3.0
+
+# Visualization
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Data handling and utilities
+pathlib2>=2.3.0  # For Python < 3.4 compatibility (if needed)
+
+
+
+# Optional: Performance optimization
+# scipy>=1.7.0  # If you need additional scientific computing functions
+# numba>=0.50.0  # If you need JIT compilation for performance

@@ -6,6 +6,8 @@ Script to analyze results from parameter sweep
 import json
 import pandas as pd
 from pathlib import Path
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import Dict, List

@@ -61,5 +61,47 @@
             {"tier_id": 5, "name": "Continental", "perc_min": 0.7143, "perc_max": 0.8571},
             {"tier_id": 6, "name": "Intercontinental", "perc_min": 0.8571, "perc_max": 1.0}
         ]
+    },
+    "8_tier": {
+        "strategy_name": "8-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Hyperlocal", "perc_min": 0.0, "perc_max": 0.125},
+            {"tier_id": 1, "name": "Local", "perc_min": 0.125, "perc_max": 0.25},
+            {"tier_id": 2, "name": "Metro", "perc_min": 0.25, "perc_max": 0.375},
+            {"tier_id": 3, "name": "Regional", "perc_min": 0.375, "perc_max": 0.5},
+            {"tier_id": 4, "name": "National", "perc_min": 0.5, "perc_max": 0.625},
+            {"tier_id": 5, "name": "Continental", "perc_min": 0.625, "perc_max": 0.75},
+            {"tier_id": 6, "name": "Transcontinental", "perc_min": 0.75, "perc_max": 0.875},
+            {"tier_id": 7, "name": "Intercontinental", "perc_min": 0.875, "perc_max": 1.0}
+        ]
+    },
+    "9_tier": {
+        "strategy_name": "9-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Hyperlocal", "perc_min": 0.0, "perc_max": 0.1111},
+            {"tier_id": 1, "name": "Local", "perc_min": 0.1111, "perc_max": 0.2222},
+            {"tier_id": 2, "name": "Metro", "perc_min": 0.2222, "perc_max": 0.3333},
+            {"tier_id": 3, "name": "Regional", "perc_min": 0.3333, "perc_max": 0.4444},
+            {"tier_id": 4, "name": "State", "perc_min": 0.4444, "perc_max": 0.5556},
+            {"tier_id": 5, "name": "National", "perc_min": 0.5556, "perc_max": 0.6667},
+            {"tier_id": 6, "name": "Continental", "perc_min": 0.6667, "perc_max": 0.7778},
+            {"tier_id": 7, "name": "Transcontinental", "perc_min": 0.7778, "perc_max": 0.8889},
+            {"tier_id": 8, "name": "Intercontinental", "perc_min": 0.8889, "perc_max": 1.0}
+        ]
+    },
+    "10_tier": {
+        "strategy_name": "10-Tier",
+        "tiers": [
+            {"tier_id": 0, "name": "Hyperlocal", "perc_min": 0.0, "perc_max": 0.1},
+            {"tier_id": 1, "name": "Local", "perc_min": 0.1, "perc_max": 0.2},
+            {"tier_id": 2, "name": "Metro", "perc_min": 0.2, "perc_max": 0.3},
+            {"tier_id": 3, "name": "Regional", "perc_min": 0.3, "perc_max": 0.4},
+            {"tier_id": 4, "name": "State", "perc_min": 0.4, "perc_max": 0.5},
+            {"tier_id": 5, "name": "National", "perc_min": 0.5, "perc_max": 0.6},
+            {"tier_id": 6, "name": "Continental", "perc_min": 0.6, "perc_max": 0.7},
+            {"tier_id": 7, "name": "Transcontinental", "perc_min": 0.7, "perc_max": 0.8},
+            {"tier_id": 8, "name": "Global", "perc_min": 0.8, "perc_max": 0.9},
+            {"tier_id": 9, "name": "Intercontinental", "perc_min": 0.9, "perc_max": 1.0}
+        ]
     }
 }
