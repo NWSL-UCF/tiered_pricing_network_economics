@@ -38,7 +38,7 @@ class PricingModel:
         tiers_info = self.tier_config[tier_key]['tiers']
         
         df_copy['tier'] = pd.qcut(
-            df_copy['distance'], q=n_tiers, labels=False, duplicates='drop'
+            df_copy['distance'], q=n_tiers, labels=False
         ).astype(int)
         
         tier_name_map = {tier['tier_id']: tier['name'] for tier in tiers_info}

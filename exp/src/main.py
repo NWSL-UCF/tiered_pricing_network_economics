@@ -19,8 +19,8 @@ class TransitISPAnalysis:
         self.logger = logger
         
         self.df = pd.read_csv(data_path)
-        self.df = self.df[self.df['distance'] > 0].reset_index(drop=True)
-        self.df['demand_tb'] = self.df['demand'] / 1e6
+        # self.df = self.df[self.df['distance'] > 0].reset_index(drop=True)
+        self.df['demand_tb'] = self.df['demand']
         
         self.tier_config = load_json(tier_config_path)
         
