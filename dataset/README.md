@@ -3,13 +3,18 @@
 ## Dataset Sources
 
 Combined network flow data from five public cybersecurity datasets:
-- Appraise H2020
-- BoT-IoT
-- CIC
-- ToN-IoT
-- UNSW
+
+| # | Dataset | Source | Rows |
+|---|---------|--------|------|
+| 1 | **Appraise H2020** | [Kaggle Dataset](https://www.kaggle.com/datasets/ittibydgoszcz/appraise-h2020-real-labelled-netflow-dataset) | 15,116,160 |
+| 2 | **NF-BoT-IoT-v2** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 16,933,808 |
+| 3 | **NF-CSE-CIC-IDS2018-v2** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 20,115,529 |
+| 4 | **NF-ToN-IoT-v2** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 27,520,260 |
+| 5 | **NF-UNSW-NB15-v2** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 2,365,424 |
 
 **Total raw flows**: 82,051,181 (3.1 GB)
+
+**Note**: Datasets 2-5 are NetFlow V2 format from the University of Queensland's Machine Learning-Based NIDS Datasets collection.
 
 ## Processing Pipeline
 
@@ -56,7 +61,7 @@ IPV4_SRC_ADDR,IPV4_DST_ADDR,flow_count,distance,demand
 **Flow count per pair**:
 - Min: 1, Max: 782,147, Mean: 1,283, Median: 5
 
-**Demand (Tb)**:
+**Demand (Tb)** — Total data volume per IP pair:
 - Min: ~0.000000001, Max: 0.445, Mean: 0.000266
 
 ## Dependencies
