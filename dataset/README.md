@@ -42,7 +42,7 @@ Removed flows containing private IPs (10.x.x.x, 172.16-31.x.x, 192.168.x.x, 127.
 
 ## Final Dataset
 
-**File**: `netflow_grouped_by_src_dst.csv`
+**File**: `netflow.csv`
 
 **Format**:
 ```csv
