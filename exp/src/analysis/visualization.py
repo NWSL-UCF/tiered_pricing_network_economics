@@ -57,7 +57,7 @@ class PayoffMatrixVisualizer:
         
         plt.tight_layout()
         plt.savefig(output_path, format='pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
-        self.logger.info(f"✅ Payoff matrix visualization saved to '{output_path}'")
+        self.logger.info(f"Payoff matrix visualization saved to '{output_path}'")
         plt.close()
     
     def _add_cell_values(self, ax, n: int, profit_A: np.ndarray, profit_B: np.ndarray, nash_coords: List[Tuple]) -> None:

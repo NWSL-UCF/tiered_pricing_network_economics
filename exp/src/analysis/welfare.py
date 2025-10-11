@@ -85,7 +85,7 @@ class WelfareAnalyzer:
     
     def analyze_nash_welfare(self, nash_equilibria: List[Tuple], welfare_results: List[Dict], max_total_welfare: Dict) -> None:
         """Analyze welfare at Nash Equilibria."""
-        self.logger.info(f"\n🎯 NASH EQUILIBRIUM WELFARE ANALYSIS:")
+        self.logger.info(f"\nNASH EQUILIBRIUM WELFARE ANALYSIS:")
         
         for idx, (name_A, name_B, profit_A, profit_B) in enumerate(nash_equilibria, 1):
             ne_welfare = next((w for w in welfare_results 
@@ -103,26 +103,26 @@ class WelfareAnalyzer:
     def _log_optimal_outcomes(self, max_total_welfare: Dict, max_consumer_surplus: Dict, 
                               max_producer_surplus: Dict, max_efficiency: Dict) -> None:
         """Log optimal welfare outcomes."""
-        self.logger.info(f"\n🏆 MAXIMUM TOTAL SOCIAL WELFARE:")
+        self.logger.info(f"\nMAXIMUM TOTAL SOCIAL WELFARE:")
         self.logger.info(f"   Strategy: ({max_total_welfare['strategy_A']}, {max_total_welfare['strategy_B']})")
         self.logger.info(f"   Consumer Surplus: ${max_total_welfare['consumer_surplus']:>14,.2f}")
         self.logger.info(f"   Producer Surplus: ${max_total_welfare['producer_surplus']:>14,.2f}")
         self.logger.info(f"   Total Welfare: ${max_total_welfare['total_welfare']:>14,.2f}")
         self.logger.info(f"   Efficiency: {max_total_welfare['efficiency_ratio']:.1%}")
         
-        self.logger.info(f"\n👥 MAXIMUM CONSUMER SURPLUS:")
+        self.logger.info(f"\nMAXIMUM CONSUMER SURPLUS:")
         self.logger.info(f"   Strategy: ({max_consumer_surplus['strategy_A']}, {max_consumer_surplus['strategy_B']})")
         self.logger.info(f"   Consumer Surplus: ${max_consumer_surplus['consumer_surplus']:>14,.2f}")
         self.logger.info(f"   Producer Surplus: ${max_consumer_surplus['producer_surplus']:>14,.2f}")
         self.logger.info(f"   Total Welfare: ${max_consumer_surplus['total_welfare']:>14,.2f}")
         
-        self.logger.info(f"\n🏢 MAXIMUM PRODUCER SURPLUS:")
+        self.logger.info(f"\nMAXIMUM PRODUCER SURPLUS:")
         self.logger.info(f"   Strategy: ({max_producer_surplus['strategy_A']}, {max_producer_surplus['strategy_B']})")
         self.logger.info(f"   Consumer Surplus: ${max_producer_surplus['consumer_surplus']:>14,.2f}")
         self.logger.info(f"   Producer Surplus: ${max_producer_surplus['producer_surplus']:>14,.2f}")
         self.logger.info(f"   Total Welfare: ${max_producer_surplus['total_welfare']:>14,.2f}")
         
-        self.logger.info(f"\n⚡ MAXIMUM EFFICIENCY:")
+        self.logger.info(f"\nMAXIMUM EFFICIENCY:")
         self.logger.info(f"   Strategy: ({max_efficiency['strategy_A']}, {max_efficiency['strategy_B']})")
         self.logger.info(f"   Efficiency: {max_efficiency['efficiency_ratio']:.1%}")
         self.logger.info(f"   Deadweight Loss: ${max_efficiency['deadweight_loss']:>14,.2f}")

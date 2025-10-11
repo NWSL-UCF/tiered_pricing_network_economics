@@ -166,7 +166,7 @@ def main():
         summary_json = scenario_path / "summary.json"
         
         results['payoff_matrix'].to_csv(payoff_csv)
-        logger.info(f"✅ Payoff matrix saved to {payoff_csv}")
+        logger.info(f"Payoff matrix saved to {payoff_csv}")
         
         logger.info("Generating visualization...")
         analysis.visualizer.visualize_payoff_matrix(
@@ -178,7 +178,7 @@ def main():
             results['parameters'], results['nash_equilibria'], 
             results['welfare_analysis'], results['strategies'], scenario_path
         )
-        logger.info(f"✅ Summary saved to {summary_json}")
+        logger.info(f"Summary saved to {summary_json}")
         
         # Generate additional detailed analysis files
         logger.info("Generating detailed analysis files...")
@@ -200,7 +200,7 @@ def main():
             'parameters': results['parameters'],
             'welfare_matrix': welfare_matrix
         }, str(welfare_json))
-        logger.info(f"✅ Welfare matrix saved to {welfare_json}")
+        logger.info(f"Welfare matrix saved to {welfare_json}")
         
         # Save strategy details
         strategy_json = scenario_path / "strategy_details.json"
@@ -208,7 +208,7 @@ def main():
             'parameters': results['parameters'],
             'strategy_details': strategy_details
         }, str(strategy_json))
-        logger.info(f"✅ Strategy details saved to {strategy_json}")
+        logger.info(f"Strategy details saved to {strategy_json}")
     
     logger.info("\n" + "="*80)
     logger.info("ALL SCENARIOS COMPLETE")
