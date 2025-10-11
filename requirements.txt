@@ -8,8 +8,9 @@ seaborn>=0.11.0
 
 # Data handling and utilities
 pathlib2>=2.3.0  # For Python < 3.4 compatibility (if needed)
-
-
+kagglehub
+geoip2
+geopy
 
 # Optional: Performance optimization
 # scipy>=1.7.0  # If you need additional scientific computing functions
