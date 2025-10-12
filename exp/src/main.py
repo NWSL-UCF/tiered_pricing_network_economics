@@ -107,7 +107,7 @@ def parse_arguments():
     parser.add_argument('--alpha', type=float, default=2.0, help='Price elasticity parameter')
     parser.add_argument('--s0', type=float, default=0.2, help='Competition intensity parameter')
     parser.add_argument('--max-tiers', type=int, default=None, help='Max tiers for NxN matrix (1-10, or omit for all scenarios 1x1 to 10x10)')
-    parser.add_argument('--data', type=str, default='../../dataset/netflow.csv', help='Path to netflow CSV')
+    parser.add_argument('--data', type=str, default='../dataset/netflow.csv', help='Path to netflow CSV')
     parser.add_argument('--config', type=str, default='tier_strategies.json', help='Path to tier config JSON')
     parser.add_argument('--base-path', type=str, required=True, help='Base path for outputs')
     parser.add_argument('--run-id', type=str, default=None, help='Run identifier')
