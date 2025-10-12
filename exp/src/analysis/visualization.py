@@ -72,7 +72,7 @@ class PayoffMatrixVisualizer:
                     ax.add_patch(rect)
                 
                 pA, pB = profit_A[i, j], profit_B[i, j]
-                text_str = f"A: ${pA:.0f}\nB: ${pB:.0f}\n★ NE ★" if is_nash else f"A: ${pA:.0f}\nB: ${pB:.0f}"
+                text_str = f"A: ${pA:.2f}\nB: ${pB:.2f}\n★ NE ★" if is_nash else f"A: ${pA:.2f}\nB: ${pB:.2f}"
                 color, weight, size = ('darkred', 'bold', 12) if is_nash else ('black', 'normal', 11)
                 
                 ax.text(j, i, text_str, ha="center", va="center", color=color, 
