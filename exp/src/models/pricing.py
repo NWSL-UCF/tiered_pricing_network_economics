@@ -26,7 +26,7 @@ class PricingModel:
         self.df['v'] = self.P0 * (self.df['demand_tb'] ** (1 / alpha))
     
     def assign_tiers(self, n_tiers: int) -> pd.DataFrame:
-        """Assign flows to tiers based on distance quantiles."""
+        """Assign flows to tiers based on distance ranges."""
         df_copy = self.df.copy()
         
         if n_tiers == 1:
@@ -37,8 +37,8 @@ class PricingModel:
         tier_key = f"{n_tiers}_tier"
         tiers_info = self.tier_config[tier_key]['tiers']
         
-        df_copy['tier'] = pd.qcut(
-            df_copy['distance'], q=n_tiers, labels=False
+        df_copy['tier'] = pd.cut(
+            df_copy['distance'], bins=n_tiers, labels=False
         ).astype(int)
         
         tier_name_map = {tier['tier_id']: tier['name'] for tier in tiers_info}
