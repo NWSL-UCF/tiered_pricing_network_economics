@@ -7,10 +7,10 @@ Combined network flow data from five public cybersecurity datasets:
 | # | Dataset | Source | Rows |
 |---|---------|--------|------|
 | 1 | **Appraise H2020** | [Kaggle Dataset](https://www.kaggle.com/datasets/ittibydgoszcz/appraise-h2020-real-labelled-netflow-dataset) | 15,116,160 |
-| 2 | **NF-BoT-IoT-v2** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 16,933,808 |
-| 3 | **NF-CSE-CIC-IDS2018-v2** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 20,115,529 |
-| 4 | **NF-ToN-IoT-v2** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 27,520,260 |
-| 5 | **NF-UNSW-NB15-v2** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 2,365,424 |
+| 2 | **NF-BoT-IoT** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 16,933,808 |
+| 3 | **NF-CSE-CIC-IDS2018** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 20,115,529 |
+| 4 | **NF-ToN-IoT** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 27,520,260 |
+| 5 | **NF-UNSW-NB15** | [UQ NIDS Datasets](https://staff.itee.uq.edu.au/marius/NIDS_datasets/) | 2,365,424 |
 
 **Total raw flows**: 82,051,181 (3.1 GB)
 
