@@ -174,30 +174,4 @@ ls results/run_*/10x10/
 ```
 
 ---
-
-## 7. Citation
-
-If you use this code or dataset in your research, please cite:
-
-```bibtex
-@software{transit_isp_pricing,
-  title = {Transit ISP Tiered Pricing: Network Economics Analysis},
-  author = {NWSL-UCF},
-  year = {2025},
-  url = {https://github.com/NWSL-UCF/tiered_pricing_network_economics}
-}
-```
-
----
-
-## 8. License
-
-This project uses data from multiple sources. Please check individual dataset licenses:
-- Appraise H2020: Check Kaggle terms
-- UQ NIDS Datasets: Academic use permitted
-
-**Code**: MIT License (if applicable)
-
----
-
 **Last Updated**: October 2025
