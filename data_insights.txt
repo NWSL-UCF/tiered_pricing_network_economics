@@ -1,0 +1,50 @@
+Different Alpha (10 folders):
+α = 0.10: payoff_sum=[101.89, 108.64], consumer_surplus=[-136.66, -129.92]
+α = 0.43: payoff_sum=[20.09, 29.54], consumer_surplus=[-54.75, -45.30]
+α = 0.77: payoff_sum=[8.26, 18.92], consumer_surplus=[-40.49, -29.82]
+α = 1.10: payoff_sum=[3.58, 14.42], consumer_surplus=[-33.22, -22.39]
+α = 1.43: payoff_sum=[-3.14, 8.92], consumer_surplus=[-25.53, -13.47]
+α = 1.77: payoff_sum=[-8.09, 6.40], consumer_surplus=[-21.17, -6.67]
+α = 2.10: payoff_sum=[-9.66, 5.48], consumer_surplus=[-18.73, -3.58]
+α = 2.43: payoff_sum=[-10.62, 4.82], consumer_surplus=[-16.77, -1.33]
+α = 2.77: payoff_sum=[-11.33, 4.32], consumer_surplus=[-15.10, 0.55]
+α = 5.00: payoff_sum=[-13.53, 2.66], consumer_surplus=[-8.50, 7.69]
+Different s0 (10 folders):
+s0 = 0.05: payoff_sum=[24.38, 41.38], consumer_surplus=[-44.38, -27.39]
+s0 = 0.14: payoff_sum=[-0.67, 15.14], consumer_surplus=[-26.97, -11.15]
+s0 = 0.23: payoff_sum=[-5.64, 9.44], consumer_surplus=[-23.18, -8.10]
+s0 = 0.35: payoff_sum=[-8.09, 6.40], consumer_surplus=[-21.17, -6.67]
+s0 = 0.44: payoff_sum=[-8.99, 5.22], consumer_surplus=[-20.37, -6.17]
+s0 = 0.53: payoff_sum=[-9.56, 4.42], consumer_surplus=[-19.85, -5.87]
+s0 = 0.62: payoff_sum=[-9.95, 3.86], consumer_surplus=[-19.47, -5.67]
+s0 = 0.71: payoff_sum=[-10.22, 3.44], consumer_surplus=[-19.19, -5.53]
+s0 = 0.80: payoff_sum=[-10.44, 3.12], consumer_surplus=[-18.98, -5.42]
+s0 = 1.00: payoff_sum=[-10.77, 2.60], consumer_surplus=[-18.63, -5.26]
+These ranges represent your selected subset of 20 folders for focused analysis!
+
+
+Different Alpha (8 folders):
+
+α = 0.43: payoff_sum=[20.09, 29.54], consumer_surplus=[-54.75, -45.30]
+α = 0.77: payoff_sum=[8.26, 18.92], consumer_surplus=[-40.49, -29.82]
+α = 1.10: payoff_sum=[3.58, 14.42], consumer_surplus=[-33.22, -22.39]
+α = 1.43: payoff_sum=[-3.14, 8.92], consumer_surplus=[-25.53, -13.47]
+α = 1.77: payoff_sum=[-8.09, 6.40], consumer_surplus=[-21.17, -6.67]
+α = 2.10: payoff_sum=[-9.66, 5.48], consumer_surplus=[-18.73, -3.58]
+α = 2.43: payoff_sum=[-10.62, 4.82], consumer_surplus=[-16.77, -1.33]
+α = 2.77: payoff_sum=[-11.33, 4.32], consumer_surplus=[-15.10, 0.55]
+
+Different s0 (8 folders):
+s0 = 0.05: payoff_sum=[24.38, 41.38], consumer_surplus=[-44.38, -27.39]
+s0 = 0.14: payoff_sum=[-0.67, 15.14], consumer_surplus=[-26.97, -11.15]
+s0 = 0.23: payoff_sum=[-5.64, 9.44], consumer_surplus=[-23.18, -8.10]
+s0 = 0.35: payoff_sum=[-8.09, 6.40], consumer_surplus=[-21.17, -6.67]
+s0 = 0.44: payoff_sum=[-8.99, 5.22], consumer_surplus=[-20.37, -6.17]
+s0 = 0.53: payoff_sum=[-9.56, 4.42], consumer_surplus=[-19.85, -5.87]
+s0 = 0.62: payoff_sum=[-9.95, 3.86], consumer_surplus=[-19.47, -5.67]
+s0 = 0.71: payoff_sum=[-10.22, 3.44], consumer_surplus=[-19.19, -5.53]
+
+These ranges represent your selected subset of 20 folders for focused analysis!
+
+so = [[-11, 42],[-45, -5]]
+alpha = [-11, 30],[-55, 1]
