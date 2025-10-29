@@ -308,9 +308,9 @@ def create_consumer_surplus_heatmap(json_file_path, csv_file_path, output_path=N
                 bin_index = max(0, min(bin_index, n_bins - 1))
                 
                 # Text color decision based on bin position:
-                # - If data lies in below 40% of bins (0-79): black text
-                # - Otherwise (80-199): white text
-                text_color = 'white' if bin_index >= 80 else 'black'
+                # - If data lies in below 30% of bins (0-299): black text
+                # - Otherwise (300-999): white text
+                text_color = 'white' if bin_index >= 300 else 'black'
                 
                 ax.text(j, i, f'{consumer_surplus_val:.1f}', 
                        ha='center', va='center', fontsize=28, color=text_color)
