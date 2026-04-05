@@ -81,7 +81,48 @@ def load_consumer_surplus_data(json_file_path, csv_file_path):
     
     return consumer_surplus_matrix, row_player_matrix, column_player_matrix
 
-def create_consumer_surplus_heatmap(json_file_path, csv_file_path, output_path=None, color_range=None, hide_numbers=False):
+
+def _finalize_heatmap_axes(fig, ax, matrix_size, hide_axis_labels, grid_linewidth, output_path):
+    """Tight layout when axis labels are hidden; otherwise leave room for tick labels."""
+    ax.set_xlim(-0.5, matrix_size - 0.5)
+    ax.set_ylim(-0.5, matrix_size - 0.5)
+    ax.set_aspect('equal')
+
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+    outer = matplotlib.patches.Rectangle(
+        (-0.5, -0.5),
+        matrix_size,
+        matrix_size,
+        fill=False,
+        edgecolor='black',
+        linewidth=grid_linewidth,
+        zorder=2,
+        joinstyle='miter',
+    )
+    ax.add_patch(outer)
+
+    if hide_axis_labels:
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.margins(0)
+        ax.set_position([0, 0, 1, 1])
+        fig.subplots_adjust(0, 0, 1, 1)
+        plt.savefig(output_path, pad_inches=0)
+    else:
+        plt.savefig(output_path, bbox_inches='tight')
+
+
+def create_consumer_surplus_heatmap(
+    json_file_path,
+    csv_file_path,
+    output_path=None,
+    color_range=None,
+    hide_numbers=False,
+    hide_axis_labels=False,
+    grid_linewidth=0.5,
+):
     """Create a heatmap from consumer surplus data"""
     import numpy as np
     import matplotlib.colors as mcolors
@@ -266,20 +307,22 @@ def create_consumer_surplus_heatmap(json_file_path, csv_file_path, output_path=N
             color = color_matrix[i, j]
             
             # Create rectangle with the exact color
-            rect = matplotlib.patches.Rectangle((j-0.5, i-0.5), 1, 1,
-                                               facecolor=color, edgecolor='white', linewidth=0.5)
+            rect = matplotlib.patches.Rectangle(
+                (j - 0.5, i - 0.5),
+                1,
+                1,
+                facecolor=color,
+                edgecolor='white',
+                linewidth=grid_linewidth,
+            )
             ax.add_patch(rect)
-    
-    # Set tick labels using sequential numbers (1, 2, 3, ...)
-    ax.set_xticks(range(matrix_size))
-    ax.set_yticks(range(matrix_size))
-    ax.set_xticklabels([str(i+1) for i in range(matrix_size)], fontsize=28)
-    ax.set_yticklabels([str(i+1) for i in range(matrix_size)], fontsize=28)
-    
-    # Set axis limits and aspect
-    ax.set_xlim(-0.5, matrix_size - 0.5)
-    ax.set_ylim(-0.5, matrix_size - 0.5)
-    ax.set_aspect('equal')
+
+    # Set tick labels using sequential numbers (1, 2, 3, ...) unless hidden
+    if not hide_axis_labels:
+        ax.set_xticks(range(matrix_size))
+        ax.set_yticks(range(matrix_size))
+        ax.set_xticklabels([str(i + 1) for i in range(matrix_size)], fontsize=28)
+        ax.set_yticklabels([str(i + 1) for i in range(matrix_size)], fontsize=28)
     
     # Find and mark Nash equilibria (based on payoff matrix)
     nash_equilibria = find_nash_equilibria(row_player_matrix, column_player_matrix)
@@ -318,9 +361,8 @@ def create_consumer_surplus_heatmap(json_file_path, csv_file_path, output_path=N
     # Set output path
     if output_path is None:
         output_path = 'consumer_surplus_heatmap.pdf'
-    
-    # Save the heatmap
-    plt.savefig(output_path, bbox_inches='tight')
+
+    _finalize_heatmap_axes(fig, ax, matrix_size, hide_axis_labels, grid_linewidth, output_path)
     plt.close()
     print(f"Consumer surplus heatmap saved as {output_path}")
 
@@ -581,7 +623,14 @@ def main():
     parser.add_argument('--colorbar-only', action='store_true', help='Generate only colorbar')
     parser.add_argument('--color-matrix', action='store_true', help='Generate color matrix instead of plots')
     parser.add_argument('--hide-numbers', action='store_true', help='Hide numbers inside cells, show only colors')
-    
+    parser.add_argument('--hide-axis-labels', action='store_true', help='Hide x and y axis tick labels (strategy index numbers)')
+    parser.add_argument(
+        '--grid-linewidth',
+        type=float,
+        default=0.5,
+        help='Line width for white cell dividers and black outer border (default: 0.5).',
+    )
+
     args = parser.parse_args()
     
     # Check if files exist
@@ -624,7 +673,15 @@ def main():
     
     # Generate heatmap
     if not args.colorbar_only:
-        create_consumer_surplus_heatmap(args.json_file, args.csv_file, args.heatmap_output, color_range, args.hide_numbers)
+        create_consumer_surplus_heatmap(
+            args.json_file,
+            args.csv_file,
+            args.heatmap_output,
+            color_range,
+            args.hide_numbers,
+            args.hide_axis_labels,
+            args.grid_linewidth,
+        )
     
     # Generate colorbar
     if not args.heatmap_only:
